@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Novo Land Bus">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="robots" content="noindex, nofollow">
 <title>Novo Land · 巴士到站 (Live)</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700;900&family=Barlow+Semi+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -63,10 +64,10 @@
   .tab.active{background:var(--header);color:var(--tab-active);box-shadow:0 .2vh .6vh rgba(0,0,0,.14);}
 
   /* ============ swipeable card area ============ */
-  .pager{-webkit-flex:1 1 auto;flex:1 1 auto;position:relative;overflow:hidden;}
-  .track{display:-webkit-flex;display:flex;width:200%;height:100%;}
-  .page{width:50%;height:100%;overflow:hidden;}
-  .cards{height:100%;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;padding:1.3vh 2.4vw;overflow:hidden;}
+  .pager{-webkit-flex:1 1 auto;flex:1 1 auto;min-height:0;position:relative;overflow:hidden;}
+  .track{position:absolute;top:0;bottom:0;left:0;width:200%;display:-webkit-flex;display:flex;}
+  .page{position:relative;width:50%;height:100%;overflow:hidden;}
+  .cards{position:absolute;top:0;left:0;right:0;bottom:0;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;padding:1.3vh 2.4vw;overflow:hidden;}
 
   .card{-webkit-flex:1 1 0px;flex:1 1 0px;min-height:0;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;
     background:var(--row-a);border:2px solid var(--hair);border-left:1.1vw solid var(--kmb);border-radius:1.5vh;
@@ -238,7 +239,7 @@
       nextHtml = nx.length ? '<span class="val">'+nx.join(' · ')+'<small>分</small></span>' : '<span class="val muted">—</span>';
     }
     return '<div class="card '+svc.op+'">'+
-      '<div class="c-badge '+svc.op+'">'+svc.key+'<div class="c-op">'+opName[svc.op]+'</div></div>'+
+      '<div class="c-badge '+svc.op+'">'+svc.key+'</div>'+
       '<div class="c-info"><div class="c-dest">往 '+svc.zh+'</div><div class="c-stop">車站：'+svc.stopZh+'</div></div>'+
       '<div class="c-next"><div class="lbl">下班</div>'+nextHtml+'</div>'+
       '<div class="c-eta"><div class="lbl">即將到達</div>'+arrHtml+'</div>'+
