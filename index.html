@@ -15,127 +15,104 @@
     --ink:#141c28; --ink-soft:#3f4f63; --muted:#6c7c8e; --hair:#cdd7e1;
     --kmb:#d7202b; --ctb:#f4a300; --ctb-ink:#3a2c00; --mtrb:#0058a3;
     --arrived:#d7202b; --header:#ffffff; --footer:#dbe6ee; --live:#1faf5a; --warn:#e0900d;
-    --btn:#e7eef4; --btn-ink:#3f4f63;
+    --btn:#e7eef4; --btn-ink:#3f4f63; --tab-ink:#6c7c8e; --tab-active:#141c28;
   }
   body.dark{
     --panel-1:#0f151c; --panel-2:#0a0e13; --row-a:#151d26; --row-b:#101822;
     --ink:#f1f6fb; --ink-soft:#c4cfda; --muted:#8493a2; --hair:#243039;
     --kmb:#ff3b40; --ctb:#ffbb1c; --ctb-ink:#2a2000; --mtrb:#3f9bff;
     --arrived:#ff4d52; --header:#0d131a; --footer:#0c1117; --live:#35d07f; --warn:#ffbb1c;
-    --btn:#1c2732; --btn-ink:#c4cfda;
+    --btn:#1c2732; --btn-ink:#c4cfda; --tab-ink:#8493a2; --tab-active:#f1f6fb;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-  html,body{height:100%;width:100%;overflow:hidden;background:var(--panel-2);}
+  html,body{height:100%;width:100%;overflow:hidden;background:var(--panel-1);}
   body{position:fixed;top:0;left:0;width:100%;height:100%;
     font-family:"Noto Sans HK",-apple-system,BlinkMacSystemFont,"PingFang HK","Microsoft JhengHei",sans-serif;
     -webkit-font-smoothing:antialiased;color:var(--ink);
     -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
-  .board{height:100%;width:100%;display:-webkit-flex;display:flex;
-    -webkit-flex-direction:column;flex-direction:column;background:var(--panel-1);}
+  .app{height:100%;width:100%;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;background:var(--panel-1);}
 
-  /* ---------------- header ---------------- */
-  .topbar{-webkit-flex:0 0 auto;flex:0 0 auto;display:-webkit-flex;display:flex;
-    -webkit-align-items:center;align-items:center;
-    padding:1.4vh 2.4vw;background:var(--header);border-bottom:1px solid var(--hair);}
+  /* ============ sticky shared header ============ */
+  .topbar{-webkit-flex:0 0 auto;flex:0 0 auto;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;
+    padding:1.3vh 2.6vw;background:var(--header);border-bottom:1px solid var(--hair);}
   .hub{-webkit-flex:1 1 0;flex:1 1 0;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;min-width:0;}
-  .hub .dot{width:1.5vh;height:1.5vh;border-radius:50%;background:var(--live);
-    box-shadow:0 0 0 .55vh rgba(31,175,90,.2);margin-right:1.4vh;-webkit-flex:0 0 auto;flex:0 0 auto;}
+  .hub .dot{width:1.5vh;height:1.5vh;border-radius:50%;background:var(--live);box-shadow:0 0 0 .55vh rgba(31,175,90,.2);margin-right:1.4vh;-webkit-flex:0 0 auto;flex:0 0 auto;}
   .hub .dot.warn{background:var(--warn);box-shadow:0 0 0 .55vh rgba(224,144,13,.2);}
-  .hub .name{font-weight:900;font-size:3.9vh;letter-spacing:.6px;color:var(--ink);-webkit-flex:0 0 auto;flex:0 0 auto;}
-  .hub .sub{font-weight:500;font-size:2.1vh;color:var(--muted);margin-left:1.4vh;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-
-  /* weather in the CENTRE */
-  .weather{-webkit-flex:0 0 auto;flex:0 0 auto;display:-webkit-flex;display:flex;
-    -webkit-align-items:center;align-items:center;-webkit-justify-content:center;justify-content:center;}
-  .temp-big{font-family:"Barlow Semi Condensed","Noto Sans HK",sans-serif;font-size:5vh;font-weight:800;
-    color:var(--ink);white-space:nowrap;}
-  .temp-big .ico{font-size:3.6vh;margin-right:.6vw;}
+  .hub .name{font-weight:900;font-size:3.6vh;letter-spacing:.6px;color:var(--ink);-webkit-flex:0 0 auto;flex:0 0 auto;}
+  .hub .sub{font-weight:500;font-size:1.95vh;color:var(--muted);margin-left:1.4vh;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .weather{-webkit-flex:0 0 auto;flex:0 0 auto;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;}
+  .temp-big{font-family:"Barlow Semi Condensed","Noto Sans HK",sans-serif;font-size:5vh;font-weight:800;color:var(--ink);white-space:nowrap;}
+  .temp-big .ico{font-size:3.4vh;margin-right:.6vw;}
   .warnbox{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;margin-left:1.2vw;}
-  .warn-chip{width:5.6vh;height:5.6vh;border-radius:1.2vh;display:-webkit-flex;display:flex;
-    -webkit-align-items:center;align-items:center;-webkit-justify-content:center;justify-content:center;
-    margin-left:.9vw;-webkit-flex:0 0 auto;flex:0 0 auto;box-shadow:0 .2vh .5vh rgba(0,0,0,.25);}
+  .warn-chip{width:5.2vh;height:5.2vh;border-radius:1.2vh;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:center;justify-content:center;margin-left:.8vw;-webkit-flex:0 0 auto;flex:0 0 auto;box-shadow:0 .2vh .5vh rgba(0,0,0,.25);}
   .warn-chip svg{width:72%;height:72%;display:block;}
-
-  .head-right{-webkit-flex:1 1 0;flex:1 1 0;display:-webkit-flex;display:flex;
-    -webkit-align-items:center;align-items:center;-webkit-justify-content:flex-end;justify-content:flex-end;}
+  .head-right{-webkit-flex:1 1 0;flex:1 1 0;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:flex-end;justify-content:flex-end;}
   .clock{text-align:right;margin-right:1.8vw;line-height:1;}
-  .clock .hm{font-family:"Barlow Semi Condensed","Noto Sans HK",sans-serif;font-weight:800;
-    font-size:7.9vh;color:var(--ink);letter-spacing:1px;
-    font-variant-numeric:tabular-nums;-webkit-font-feature-settings:"tnum";font-feature-settings:"tnum";
-    white-space:nowrap;}
-  .clock .hm .sec{font-size:3.3vh;color:var(--muted);margin-left:.5vw;font-weight:700;
-    display:inline-block;width:2.3ch;text-align:left;}
-  .clock .date{font-size:2.1vh;color:var(--muted);font-weight:600;margin-top:.4vh;}
-  .toggle{-webkit-flex:0 0 auto;flex:0 0 auto;width:6.6vh;height:6.6vh;border-radius:50%;border:none;
-    cursor:pointer;background:var(--btn);color:var(--btn-ink);font-size:3.1vh;line-height:6.6vh;text-align:center;}
+  .clock .hm{font-family:"Barlow Semi Condensed","Noto Sans HK",sans-serif;font-weight:800;font-size:7.4vh;color:var(--ink);letter-spacing:1px;font-variant-numeric:tabular-nums;-webkit-font-feature-settings:"tnum";font-feature-settings:"tnum";white-space:nowrap;}
+  .clock .hm .sec{font-size:3.1vh;color:var(--muted);margin-left:.5vw;font-weight:700;display:inline-block;width:2.3ch;text-align:left;}
+  .clock .date{font-size:1.95vh;color:var(--muted);font-weight:600;margin-top:.4vh;}
+  .toggle{-webkit-flex:0 0 auto;flex:0 0 auto;width:6.4vh;height:6.4vh;border-radius:50%;border:none;cursor:pointer;background:var(--btn);color:var(--btn-ink);
+    display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:center;justify-content:center;}
+  .toggle svg{width:3.4vh;height:3.4vh;display:block;}
 
-  /* ---------------- column labels ---------------- */
-  .cols{-webkit-flex:0 0 auto;flex:0 0 auto;display:-webkit-flex;display:flex;
-    -webkit-align-items:center;align-items:center;padding:1vh 2.4vw;color:var(--muted);
-    font-size:2.1vh;font-weight:700;letter-spacing:.5px;border-bottom:1px solid var(--hair);background:var(--header);}
+  /* ============ sticky tabs ============ */
+  .tabs{-webkit-flex:0 0 auto;flex:0 0 auto;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:center;justify-content:center;background:var(--header);border-bottom:1px solid var(--hair);padding:.7vh 0;z-index:5;}
+  .seg{display:-webkit-flex;display:flex;background:var(--panel-2);border-radius:999px;padding:.4vh .4vh;}
+  .tab{border:none;background:transparent;color:var(--tab-ink);font-family:inherit;font-weight:800;font-size:2vh;padding:.7vh 4vw;border-radius:999px;cursor:pointer;line-height:1.05;text-align:center;-webkit-transition:all .22s;transition:all .22s;}
+  .tab small{display:block;font-size:1.25vh;font-weight:600;opacity:.75;margin-top:.1vh;}
+  .tab.active{background:var(--header);color:var(--tab-active);box-shadow:0 .2vh .6vh rgba(0,0,0,.14);}
 
-  /* ---------------- rows ---------------- */
-  .rows{-webkit-flex:1 1 auto;flex:1 1 auto;display:-webkit-flex;display:flex;
-    -webkit-flex-direction:column;flex-direction:column;overflow:hidden;}
-  .row{-webkit-flex:1 1 0px;flex:1 1 0px;min-height:0;display:-webkit-flex;display:flex;
-    -webkit-align-items:center;align-items:center;padding:0 2.4vw;border-bottom:1px solid var(--hair);}
-  .row:nth-child(odd){background:var(--row-a);} .row:nth-child(even){background:var(--row-b);}
-  .row:last-child{border-bottom:none;}
+  /* ============ swipeable card area ============ */
+  .pager{-webkit-flex:1 1 auto;flex:1 1 auto;position:relative;overflow:hidden;}
+  .track{display:-webkit-flex;display:flex;width:200%;height:100%;}
+  .page{width:50%;height:100%;overflow:hidden;}
+  .cards{height:100%;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;padding:1.3vh 2.4vw;overflow:hidden;}
 
-  .c-route{-webkit-flex:0 0 19%;flex:0 0 19%;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;}
-  .c-dest{-webkit-flex:1 1 auto;flex:1 1 auto;min-width:0;padding-right:1.5vw;}
-  .c-next{-webkit-flex:0 0 15%;flex:0 0 15%;}
-  .c-eta{-webkit-flex:0 0 20%;flex:0 0 20%;text-align:right;}
+  .card{-webkit-flex:1 1 0px;flex:1 1 0px;min-height:0;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;
+    background:var(--row-a);border:2px solid var(--hair);border-left:1.1vw solid var(--kmb);border-radius:1.5vh;
+    padding:0 2.2vw;margin-bottom:1.3vh;box-shadow:0 .3vh .8vh rgba(0,0,0,.08);}
+  .card:last-child{margin-bottom:0;}
+  .card.kmb{border-left-color:var(--kmb);} .card.ctb{border-left-color:var(--ctb);} .card.mtrb{border-left-color:var(--mtrb);}
+  .c-badge{font-family:"Barlow Semi Condensed","Noto Sans HK",sans-serif;font-weight:800;font-size:2.3rem;color:#fff;
+    background:var(--kmb);padding:.5rem .9rem;border-radius:.75rem;min-width:5.6rem;text-align:center;-webkit-flex:0 0 auto;flex:0 0 auto;letter-spacing:.5px;line-height:1.05;}
+  .c-badge.kmb{background:var(--kmb);} .c-badge.ctb{background:var(--ctb);color:var(--ctb-ink);} .c-badge.mtrb{background:var(--mtrb);}
+  .c-op{font-size:.8rem;font-weight:700;margin-top:.25rem;opacity:.9;}
+  .c-info{-webkit-flex:1 1 auto;flex:1 1 auto;min-width:0;padding:0 1.8vw;}
+  .c-dest{font-size:1.95rem;font-weight:800;color:var(--ink);line-height:1.18;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .c-stop{font-size:1.4rem;font-weight:600;color:var(--ink-soft);line-height:1.3;margin-top:.3rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-  .badge{font-family:"Barlow Semi Condensed","Noto Sans HK",sans-serif;font-weight:800;color:#fff;
-    font-size:4.2vh;line-height:1;padding:.9vh 1.2vw;border-radius:1.2vh;letter-spacing:.5px;
-    text-align:center;margin-right:1vw;-webkit-flex:0 0 auto;flex:0 0 auto;}
-  .badge.kmb{background:var(--kmb);} .badge.ctb{background:var(--ctb);color:var(--ctb-ink);} .badge.mtrb{background:var(--mtrb);}
-  .op{font-size:1.7vh;font-weight:700;line-height:1.2;}
-  .op.kmb{color:var(--kmb);} .op.ctb{color:#c07f00;} .op.mtrb{color:var(--mtrb);}
-  body.dark .op.ctb{color:var(--ctb);}
+  .c-next{-webkit-flex:0 0 auto;flex:0 0 auto;min-width:8.5rem;text-align:left;padding-right:1.6vw;
+    border-left:2px solid var(--hair);padding-left:1.6vw;}
+  .c-next .lbl{font-size:1.05rem;font-weight:700;color:var(--muted);letter-spacing:.3px;}
+  .c-next .val{font-family:"Barlow Semi Condensed","Noto Sans HK",sans-serif;font-size:1.75rem;font-weight:800;color:var(--ink-soft);line-height:1.2;margin-top:.15rem;}
+  .c-next .val small{font-size:1.05rem;color:var(--muted);font-weight:600;margin-left:.2rem;}
+  .c-next .val.muted{color:var(--hair);}
 
-  .dest-main{font-size:4.1vh;font-weight:700;color:var(--ink);line-height:1.1;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .dest-sub{font-size:2.2vh;color:var(--muted);font-weight:500;margin-top:.3vh;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .c-eta{-webkit-flex:0 0 auto;flex:0 0 auto;text-align:right;min-width:8.2rem;}
+  .c-eta .lbl{font-size:1.05rem;font-weight:700;color:var(--muted);letter-spacing:.3px;}
+  .c-eta .num{font-family:"Barlow Semi Condensed","Noto Sans HK",sans-serif;font-size:3.2rem;font-weight:800;color:var(--ink);line-height:1;}
+  .c-eta .num.soon{color:var(--kmb);}
+  .c-eta .unit{font-size:1.3rem;color:var(--muted);font-weight:700;}
+  .c-eta .arr{font-size:2.2rem;font-weight:800;color:var(--arrived);line-height:1.05;}
+  .c-eta .none{font-size:1.6rem;color:var(--muted);font-weight:700;}
 
-  .nx{font-size:2.9vh;color:var(--ink-soft);font-weight:700;line-height:1.25;
-    font-family:"Barlow Semi Condensed","Noto Sans HK",sans-serif;}
-  .nx small{font-size:1.9vh;color:var(--muted);font-weight:600;margin-left:.5vw;font-family:"Noto Sans HK",sans-serif;}
-  .nx.empty{color:var(--hair);}
-
-  .eta-num{font-family:"Barlow Semi Condensed","Noto Sans HK",sans-serif;font-weight:800;
-    font-size:7.6vh;color:var(--ink);letter-spacing:.5px;}
-  .eta-unit{font-size:2.3vh;color:var(--muted);font-weight:600;margin-left:.6vw;}
-  .arrived{font-size:4.4vh;font-weight:800;color:var(--arrived);letter-spacing:1px;}
-  .eta-none{font-size:2.7vh;color:var(--muted);font-weight:600;}
-  .soon .eta-num{color:var(--kmb);}
-
-  /* ---------------- footer ---------------- */
-  .footer{-webkit-flex:0 0 auto;flex:0 0 auto;display:-webkit-flex;display:flex;
-    -webkit-align-items:center;align-items:center;-webkit-justify-content:space-between;justify-content:space-between;
-    padding:1.2vh 2.4vw;background:var(--footer);color:var(--ink-soft);border-top:1px solid var(--hair);
-    font-size:2.3vh;font-weight:600;}
-  .foot-l{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;}
-  .live-pill{background:#127a3e;color:#eafff2;border-radius:1vh;padding:.35vh 1.3vw;font-weight:800;
-    font-size:1.95vh;letter-spacing:.5px;}
+  /* ============ sticky footer ============ */
+  .footer{-webkit-flex:0 0 auto;flex:0 0 auto;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:space-between;justify-content:space-between;padding:1.1vh 2.6vw;background:var(--footer);color:var(--muted);border-top:1px solid var(--hair);font-size:2vh;font-weight:600;}
+  .live-pill{background:#127a3e;color:#eafff2;border-radius:1vh;padding:.35vh 1.3vw;font-weight:800;font-size:1.85vh;letter-spacing:.5px;}
   .live-pill.warn{background:#7a5500;color:#fff3d6;}
-  .foot-r{color:var(--muted);}
 
-  .rotate{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0d0f12;color:#c3ccd8;
-    -webkit-flex-direction:column;flex-direction:column;-webkit-align-items:center;align-items:center;
-    -webkit-justify-content:center;justify-content:center;font-size:3.4vw;text-align:center;line-height:1.6;z-index:10;}
-  @media (orientation:portrait){ .rotate{display:-webkit-flex;display:flex;} .board{display:none;} }
+  .rotate{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0d0f12;color:#c3ccd8;-webkit-flex-direction:column;flex-direction:column;-webkit-align-items:center;align-items:center;-webkit-justify-content:center;justify-content:center;font-size:3.4vw;text-align:center;line-height:1.6;z-index:10;}
+  @media (orientation:portrait){ .rotate{display:-webkit-flex;display:flex;} .app{display:none;} }
 </style>
 </head>
 <body>
-  <div class="board">
+  <div class="app">
+
+    <!-- sticky header -->
     <div class="topbar">
       <div class="hub">
         <span class="dot" id="statusDot"></span>
         <span class="name">NOVO LAND</span>
-        <span class="sub">菁田 · 屯門 Ching Tin, Tuen Mun</span>
       </div>
       <div class="weather">
         <span class="temp-big"><span class="ico">☀</span><span id="temp">--°</span></span>
@@ -144,24 +121,32 @@
       <div class="head-right">
         <div class="clock">
           <div class="hm"><span id="ck-hm">--:--</span><span class="sec" id="ck-s">--</span></div>
-          <div class="date" id="ck-date">香港時間 HKT</div>
+          <div class="date" id="ck-date"></div>
         </div>
-        <button class="toggle" id="themeBtn" aria-label="theme">☾</button>
+        <button class="toggle" id="themeBtn" aria-label="theme"></button>
       </div>
     </div>
 
-    <div class="cols">
-      <div class="c-route">路線 Route</div>
-      <div class="c-dest">目的地 Destination</div>
-      <div class="c-next">下班 Next</div>
-      <div class="c-eta">即將到達 Arriving</div>
+    <!-- sticky tabs -->
+    <div class="tabs">
+      <div class="seg">
+        <button class="tab active" data-p="0" id="tab0">我的路線</button>
+        <button class="tab" data-p="1" id="tab1">家人版</button>
+      </div>
     </div>
 
-    <div class="rows" id="rows"></div>
+    <!-- swipeable cards only -->
+    <div class="pager" id="pager">
+      <div class="track" id="track">
+        <div class="page"><div class="cards" id="cards1"></div></div>
+        <div class="page"><div class="cards" id="cards2"></div></div>
+      </div>
+    </div>
 
+    <!-- sticky footer -->
     <div class="footer">
-      <div class="foot-l"><span class="live-pill" id="livePill">實時 LIVE</span></div>
-      <div class="foot-r">更新 <span id="upd">--:--</span></div>
+      <span class="live-pill" id="livePill">實時 LIVE</span>
+      <span>更新 <span id="upd">--:--</span></span>
     </div>
   </div>
 
@@ -169,210 +154,186 @@
 
 <script>
 (function(){
-  /* ---- proxy: paste your Cloudflare Worker URL, then re-deploy ---- */
   var PROXY = '';
   function px(u){ return PROXY ? PROXY + '?url=' + encodeURIComponent(u) : u; }
 
+  /* ---- Page 1: My Routes ---- */
   var SVCS = [
-    {key:'K54',  op:'mtrb', kind:'mtr', routeName:'K54',  stopId:'K54-U020',  fallbackIndex:1,
-      zh:'屯門市中心 (循環線)', en:'Tuen Mun Town Centre (Circular)'},
-    {key:'K54A', op:'mtrb', kind:'mtr', routeName:'K54A', stopId:'K54A-U020', fallbackIndex:1,
-      zh:'兆康站 (北)', en:'MTR Siu Hong Station (North)'},
-    {key:'258D', op:'kmb',  kind:'kmb', route:'258D', bound:'outbound', dir:'O', service:'1',
-      match:['寶田','PO TIN'], zh:'藍田站', en:'Lam Tin Station'},
-    {key:'55',   op:'ctb',  kind:'ctb', route:'55',  bound:'outbound', dir:'O',
-      match:['NOVO LAND'], zh:'觀塘碼頭', en:'Kwun Tong Ferry Pier'},
-    {key:'50',   op:'ctb',  kind:'ctb', route:'50',  bound:'outbound', dir:'O',
-      match:['NOVO LAND'], zh:'尖沙咀 (九龍站)', en:'Tsim Sha Tsui (Kowloon Station)'}
+    {key:'K54',  op:'mtrb', kind:'mtr', routeName:'K54',  stopId:'K54-U020',  fallbackIndex:1, zh:'屯門市中心 (循環線)', stopZh:'NOVO LAND · 菁田邨'},
+    {key:'K54A', op:'mtrb', kind:'mtr', routeName:'K54A', stopId:'K54A-U020', fallbackIndex:1, zh:'兆康站 (北)', stopZh:'NOVO LAND · 菁田邨'},
+    {key:'258D', op:'kmb',  kind:'kmb', route:'258D', bound:'outbound', dir:'O', service:'1', match:['寶田','PO TIN'], zh:'藍田站', stopZh:'寶田轉車站 · 寶田總站'},
+    {key:'55',   op:'ctb',  kind:'ctb', route:'55',  bound:'outbound', dir:'O', match:['NOVO LAND'], zh:'觀塘碼頭', stopZh:'NOVO LAND · 欣寶路'},
+    {key:'50',   op:'ctb',  kind:'ctb', route:'50',  bound:'outbound', dir:'O', match:['NOVO LAND'], zh:'尖沙咀 (九龍站)', stopZh:'NOVO LAND · 欣寶路'}
   ];
-  var opName = {kmb:{en:"KMB",zh:"九巴"}, ctb:{en:"CTB",zh:"城巴"}, mtrb:{en:"MTR Bus",zh:"港鐵巴士"}};
+  /* ---- Page 2: Senior (all KMB) ---- */
+  var SVCS2 = [
+    {id:'p2_58M',  key:'58M',  op:'kmb', kind:'kmb', route:'58M',  bound:'outbound', dir:'O', service:'1', match:['寶田','PO TIN'], zh:'葵芳站', stopZh:'寶田轉車站 · 寶田'},
+    {id:'p2_67A',  key:'67A',  op:'kmb', kind:'kmb', route:'67A',  bound:'outbound', dir:'O', service:'1', match:['NOVO LAND'], zh:'葵芳 (葵翠邨)', stopZh:'NOVO LAND · 欣寶路'},
+    {id:'p2_258D', key:'258D', op:'kmb', kind:'kmb', route:'258D', bound:'outbound', dir:'O', service:'1', match:['寶田','PO TIN'], zh:'藍田站', stopZh:'寶田轉車站 · 寶田總站'},
+    {id:'p2_960',  key:'960',  op:'kmb', kind:'kmb', route:'960',  bound:'outbound', dir:'O', service:'1', match:['盈豐','寶田','PO TIN'], zh:'會展站', stopZh:'寶田轉車站 · 盈豐園'}
+  ];
+  var ALL = SVCS.concat(SVCS2);
+  function SID(s){ return s.id || s.key; }
+  var opName = {kmb:'九巴 KMB', ctb:'城巴 CTB', mtrb:'港鐵巴士 MTR Bus'};
   var days = ['日','一','二','三','四','五','六'];
   var state = {}; var lastUpdate = 0;
 
   function pad(n){ return ('0'+n).slice(-2); }
   function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
   function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  function txt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
+  function html2(id,h){ var el=document.getElementById(id); if(el) el.innerHTML=h; }
   function hkDate(){ var n=new Date(); return new Date(n.getTime()+n.getTimezoneOffset()*60000+8*3600000); }
-  function makeMatcher(patterns){
-    var ps=(patterns||['NOVO LAND']).map(function(p){return p.toUpperCase();});
+  function makeMatcher(patterns){ var ps=(patterns||['NOVO LAND']).map(function(p){return p.toUpperCase();});
     return function(en,tc){ en=(en||'').toUpperCase(); tc=(tc||'').toUpperCase();
-      for(var i=0;i<ps.length;i++){ if(en.indexOf(ps[i])>=0 || tc.indexOf(ps[i])>=0) return true; } return false; };
-  }
-  function getJSON(url,opts){
-    return fetch(px(url), opts||{}).then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
-  }
+      for(var i=0;i<ps.length;i++){ if(en.indexOf(ps[i])>=0 || tc.indexOf(ps[i])>=0) return true; } return false; }; }
+  function getJSON(url,opts){ return fetch(px(url), opts||{}).then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }); }
 
-  /* ---- stop resolution (KMB / CTB), cached ---- */
-  function resolveKmb(svc){
-    var sig=(svc.match||[]).join('|'); var ck='novo_kmb_'+svc.route+'_'+svc.bound+'_'+sig;
-    var c=lsGet(ck); if(c) return Promise.resolve(c); var matcher=makeMatcher(svc.match);
-    return getJSON('https://data.etabus.gov.hk/v1/transport/kmb/route-stop/'+svc.route+'/'+svc.bound+'/'+svc.service)
-      .then(function(rs){ var stops=(rs&&rs.data)||[]; var idx=0;
-        function step(){ if(idx>=stops.length||idx>60) return null; var sid=stops[idx].stop; idx++;
-          return getJSON('https://data.etabus.gov.hk/v1/transport/kmb/stop/'+sid).then(function(s){
-            var d=s&&s.data||{}; if(matcher(d.name_en,d.name_tc)){ lsSet(ck,sid); return sid; } return step(); }); }
-        return step(); });
-  }
-  function resolveCtb(svc){
-    var sig=(svc.match||[]).join('|'); var ck='novo_ctb_'+svc.route+'_'+svc.bound+'_'+sig;
-    var c=lsGet(ck); if(c) return Promise.resolve(c); var matcher=makeMatcher(svc.match);
-    return getJSON('https://rt.data.gov.hk/v2/transport/citybus/route-stop/CTB/'+svc.route+'/'+svc.bound)
-      .then(function(rs){ var stops=(rs&&rs.data)||[]; var idx=0;
-        function step(){ if(idx>=stops.length||idx>60) return null; var sid=stops[idx].stop; idx++;
-          return getJSON('https://rt.data.gov.hk/v2/transport/citybus/stop/'+sid).then(function(s){
-            var d=s&&s.data||{}; if(matcher(d.name_en,d.name_tc)){ lsSet(ck,sid); return sid; } return step(); }); }
-        return step(); });
-  }
+  function resolveKmb(svc){ var sig=(svc.match||[]).join('|'); var ck='novo_kmb_'+svc.route+'_'+svc.bound+'_'+sig; var c=lsGet(ck); if(c) return Promise.resolve(c);
+    var matcher=makeMatcher(svc.match);
+    return getJSON('https://data.etabus.gov.hk/v1/transport/kmb/route-stop/'+svc.route+'/'+svc.bound+'/'+svc.service).then(function(rs){
+      var stops=(rs&&rs.data)||[]; var idx=0;
+      function step(){ if(idx>=stops.length||idx>80) return null; var sid=stops[idx].stop; idx++;
+        return getJSON('https://data.etabus.gov.hk/v1/transport/kmb/stop/'+sid).then(function(s){ var d=s&&s.data||{}; if(matcher(d.name_en,d.name_tc)){ lsSet(ck,sid); return sid; } return step(); }); }
+      return step(); }); }
+  function resolveCtb(svc){ var sig=(svc.match||[]).join('|'); var ck='novo_ctb_'+svc.route+'_'+svc.bound+'_'+sig; var c=lsGet(ck); if(c) return Promise.resolve(c);
+    var matcher=makeMatcher(svc.match);
+    return getJSON('https://rt.data.gov.hk/v2/transport/citybus/route-stop/CTB/'+svc.route+'/'+svc.bound).then(function(rs){
+      var stops=(rs&&rs.data)||[]; var idx=0;
+      function step(){ if(idx>=stops.length||idx>80) return null; var sid=stops[idx].stop; idx++;
+        return getJSON('https://rt.data.gov.hk/v2/transport/citybus/stop/'+sid).then(function(s){ var d=s&&s.data||{}; if(matcher(d.name_en,d.name_tc)){ lsSet(ck,sid); return sid; } return step(); }); }
+      return step(); }); }
 
-  /* ---- ETA fetchers -> absolute target times (ms) ---- */
   function fetchKmb(svc){ return resolveKmb(svc).then(function(sid){ if(!sid) return [];
     return getJSON('https://data.etabus.gov.hk/v1/transport/kmb/eta/'+sid+'/'+svc.route+'/'+svc.service).then(function(r){
-      return ((r&&r.data)||[]).filter(function(e){return e.dir===svc.dir && e.eta;})
-        .map(function(e){return new Date(e.eta).getTime();}).filter(function(t){return !isNaN(t);}); }); }); }
+      return ((r&&r.data)||[]).filter(function(e){return e.dir===svc.dir && e.eta;}).map(function(e){return new Date(e.eta).getTime();}).filter(function(t){return !isNaN(t);}); }); }); }
   function fetchCtb(svc){ return resolveCtb(svc).then(function(sid){ if(!sid) return [];
     return getJSON('https://rt.data.gov.hk/v2/transport/citybus/eta/CTB/'+sid+'/'+svc.route).then(function(r){
-      return ((r&&r.data)||[]).filter(function(e){return e.dir===svc.dir && e.eta;})
-        .map(function(e){return new Date(e.eta).getTime();}).filter(function(t){return !isNaN(t);}); }); }); }
-  function fetchMtr(svc){
-    return getJSON('https://rt.data.gov.hk/v1/transport/mtr/bus/getSchedule',
-      {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({language:'en',routeName:svc.routeName})})
-      .then(function(r){ var stops=(r&&r.busStop)||[]; var target=null;
-        for(var i=0;i<stops.length;i++){ if(stops[i].busStopId===svc.stopId){ target=stops[i]; break; } }
-        if(!target && stops.length>svc.fallbackIndex) target=stops[svc.fallbackIndex];
-        if(!target) return []; var now=Date.now();
-        return ((target.bus)||[]).map(function(b){
-          var raw=(b.arrivalTimeInSecond!=null && b.arrivalTimeInSecond!=='')?b.arrivalTimeInSecond:b.departureTimeInSecond;
-          var sec=parseInt(raw,10); if(isNaN(sec)) return NaN; return now+sec*1000;
-        }).filter(function(t){return !isNaN(t);}); });
-  }
+      return ((r&&r.data)||[]).filter(function(e){return e.dir===svc.dir && e.eta;}).map(function(e){return new Date(e.eta).getTime();}).filter(function(t){return !isNaN(t);}); }); }); }
+  function fetchMtr(svc){ return getJSON('https://rt.data.gov.hk/v1/transport/mtr/bus/getSchedule',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({language:'en',routeName:svc.routeName})}).then(function(r){
+    var stops=(r&&r.busStop)||[]; var target=null;
+    for(var i=0;i<stops.length;i++){ if(stops[i].busStopId===svc.stopId){ target=stops[i]; break; } }
+    if(!target && stops.length>svc.fallbackIndex) target=stops[svc.fallbackIndex];
+    if(!target) return []; var now=Date.now();
+    return ((target.bus)||[]).map(function(b){ var raw=(b.arrivalTimeInSecond!=null && b.arrivalTimeInSecond!=='')?b.arrivalTimeInSecond:b.departureTimeInSecond; var sec=parseInt(raw,10); if(isNaN(sec)) return NaN; return now+sec*1000; }).filter(function(t){return !isNaN(t);}); }); }
 
-  function refreshOne(svc){
-    var p = svc.kind==='kmb'?fetchKmb(svc):svc.kind==='ctb'?fetchCtb(svc):fetchMtr(svc);
-    return p.then(function(targets){
-      targets=(targets||[]).filter(function(t){return t>Date.now()-90000;}).sort(function(a,b){return a-b;});
-      state[svc.key]={targets:targets,err:false,loading:false};
-    }).catch(function(e){ var prev=state[svc.key];
-      state[svc.key]={targets:prev?prev.targets:[],err:true,loading:false}; });
-  }
-  function refreshAll(){ var ps=[]; for(var i=0;i<SVCS.length;i++) ps.push(refreshOne(SVCS[i]));
-    return Promise.all(ps).then(function(){ lastUpdate=Date.now(); render(); updStatus(); }); }
+  function refreshOne(svc){ var p=svc.kind==='kmb'?fetchKmb(svc):svc.kind==='ctb'?fetchCtb(svc):fetchMtr(svc);
+    return p.then(function(targets){ targets=(targets||[]).filter(function(t){return t>Date.now()-90000;}).sort(function(a,b){return a-b;}); state[SID(svc)]={targets:targets,err:false,loading:false};
+    }).catch(function(e){ var prev=state[SID(svc)]; state[SID(svc)]={targets:prev?prev.targets:[],err:true,loading:false}; }); }
+  function refreshAll(){ var ps=[]; for(var i=0;i<ALL.length;i++) ps.push(refreshOne(ALL[i])); return Promise.all(ps).then(function(){ lastUpdate=Date.now(); renderAll(); updStatus(); }); }
 
-  /* ---- render rows ---- */
-  function render(){ var now=Date.now(); var html='';
-    for(var i=0;i<SVCS.length;i++){ var svc=SVCS[i]; var st=state[svc.key]||{loading:true}; var etaHtml,nextHtml;
-      if(st.loading){ etaHtml='<span class="eta-none">載入中…</span>'; nextHtml='<span class="nx empty">—</span>'; }
-      else{ var secs=st.targets.map(function(t){return (t-now)/1000;}).filter(function(s){return s>-45;}).sort(function(a,b){return a-b;});
-        if(secs.length===0){ etaHtml='<span class="eta-none">'+(st.err?'讀取失敗':'—')+'</span>'; nextHtml='<span class="nx empty">—</span>'; }
-        else{ var s0=secs[0];
-          if(s0<=30){ etaHtml='<span class="arrived">已到站</span>'; }
-          else{ var m=Math.max(1,Math.round(s0/60)); etaHtml='<span class="eta-num'+(m<=3?' soon':'')+'">'+m+'</span><span class="eta-unit">Min.</span>'; }
-          var nx=secs.slice(1,3); nextHtml='';
-          for(var j=0;j<nx.length;j++){ nextHtml+=(j>0?'<br>':'')+'<span class="nx">'+Math.max(1,Math.round(nx[j]/60))+'<small>Min.</small></span>'; }
-          if(nx.length===0) nextHtml='<span class="nx empty">—</span>'; } }
-      html+='<div class="row"><div class="c-route"><span class="badge '+svc.op+'">'+svc.key+'</span>'+
-        '<span class="op '+svc.op+'">'+opName[svc.op].en+'<br>'+opName[svc.op].zh+'</span></div>'+
-        '<div class="c-dest"><div class="dest-main">'+svc.zh+'</div><div class="dest-sub">'+svc.en+'</div></div>'+
-        '<div class="c-next">'+nextHtml+'</div><div class="c-eta">'+etaHtml+'</div></div>';
+  function secsFor(svc){ var st=state[SID(svc)]; if(!st||st.loading) return {loading:true};
+    var now=Date.now(); var secs=(st.targets||[]).map(function(t){return (t-now)/1000;}).filter(function(s){return s>-45;}).sort(function(a,b){return a-b;}); return {secs:secs, err:st.err}; }
+
+  /* ---- unified card (used by BOTH pages) ---- */
+  function cardHtml(svc){
+    var r=secsFor(svc); var arrHtml, nextHtml;
+    if(r.loading){ arrHtml='<span class="none">載入中…</span>'; nextHtml='<span class="val muted">—</span>'; }
+    else if(!r.secs.length){ arrHtml='<span class="arr" style="color:var(--muted)">'+(r.err?'讀取失敗':'暫無班次')+'</span>'; nextHtml='<span class="val muted">—</span>'; }
+    else{
+      var s0=r.secs[0];
+      if(s0<=30){ arrHtml='<span class="arr">已到站</span>'; }
+      else{ var m=Math.max(1,Math.round(s0/60)); arrHtml='<span class="num'+(m<=3?' soon':'')+'">'+m+'</span><span class="unit"> 分</span>'; }
+      var nx=r.secs.slice(1,3).map(function(s){return Math.max(1,Math.round(s/60));});
+      nextHtml = nx.length ? '<span class="val">'+nx.join(' · ')+'<small>分</small></span>' : '<span class="val muted">—</span>';
     }
-    document.getElementById('rows').innerHTML=html;
+    return '<div class="card '+svc.op+'">'+
+      '<div class="c-badge '+svc.op+'">'+svc.key+'<div class="c-op">'+opName[svc.op]+'</div></div>'+
+      '<div class="c-info"><div class="c-dest">往 '+svc.zh+'</div><div class="c-stop">車站：'+svc.stopZh+'</div></div>'+
+      '<div class="c-next"><div class="lbl">下班</div>'+nextHtml+'</div>'+
+      '<div class="c-eta"><div class="lbl">即將到達</div>'+arrHtml+'</div>'+
+      '</div>';
   }
+  function renderCards(list,id){ var h=''; for(var i=0;i<list.length;i++) h+=cardHtml(list[i]); html2(id,h); }
+  function renderAll(){ renderCards(SVCS,'cards1'); renderCards(SVCS2,'cards2'); }
 
   function updStatus(){ var anyErr=false,anyOk=false;
-    for(var i=0;i<SVCS.length;i++){ var st=state[SVCS[i].key]; if(st){ if(st.err)anyErr=true; else anyOk=true; } }
-    document.getElementById('statusDot').className='dot'+((!anyOk||anyErr)?' warn':'');
-    var pill=document.getElementById('livePill');
-    if(!anyOk){ pill.textContent='離線 OFFLINE'; pill.className='live-pill warn'; }
-    else if(anyErr){ pill.textContent='部分實時'; pill.className='live-pill warn'; }
-    else { pill.textContent='實時 LIVE'; pill.className='live-pill'; }
-    if(lastUpdate){ var d=hkDate(); document.getElementById('upd').textContent=pad(d.getHours())+':'+pad(d.getMinutes()); }
-  }
+    for(var i=0;i<ALL.length;i++){ var st=state[SID(ALL[i])]; if(st){ if(st.err)anyErr=true; else anyOk=true; } }
+    var sd=document.getElementById('statusDot'); if(sd) sd.className='dot'+((!anyOk||anyErr)?' warn':'');
+    var label,cls; if(!anyOk){ label='離線 OFFLINE'; cls='live-pill warn'; } else if(anyErr){ label='部分實時'; cls='live-pill warn'; } else { label='實時 LIVE'; cls='live-pill'; }
+    var p=document.getElementById('livePill'); if(p){ p.textContent=label; p.className=cls; }
+    if(lastUpdate){ var d=hkDate(); txt('upd',pad(d.getHours())+':'+pad(d.getMinutes())); } }
+  function updClock(){ var d=hkDate(); txt('ck-hm',pad(d.getHours())+':'+pad(d.getMinutes())); txt('ck-s',pad(d.getSeconds()));
+    txt('ck-date',(d.getMonth()+1)+'月'+d.getDate()+'日 星期'+days[d.getDay()]); }
 
-  function updClock(){ var d=hkDate();
-    document.getElementById('ck-hm').textContent=pad(d.getHours())+':'+pad(d.getMinutes());
-    document.getElementById('ck-s').textContent=pad(d.getSeconds());
-    document.getElementById('ck-date').textContent='香港時間 '+(d.getMonth()+1)+'月'+d.getDate()+'日 星期'+days[d.getDay()]; }
+  function updWeather(){ getJSON('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=en').then(function(d){
+    var arr=(d&&d.temperature&&d.temperature.data)||[]; var t=null;
+    for(var i=0;i<arr.length;i++){ if(arr[i].place==='Tuen Mun'){ t=arr[i].value; break; } }
+    if(t===null && arr.length) t=arr[0].value; if(t!==null) txt('temp',Math.round(t)+'°C'); }).catch(function(){}); }
 
-  /* ---------------- weather: temperature (Tuen Mun) ---------------- */
-  function updWeather(){
-    getJSON('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=en').then(function(d){
-      var arr=(d&&d.temperature&&d.temperature.data)||[]; var t=null;
-      for(var i=0;i<arr.length;i++){ if(arr[i].place==='Tuen Mun'){ t=arr[i].value; break; } }
-      if(t===null && arr.length) t=arr[0].value;
-      if(t!==null) document.getElementById('temp').textContent=Math.round(t)+'°C';
-    }).catch(function(){});
-  }
-
-  /* ---------------- weather WARNINGS -> icon chips (never words) ---------------- */
-  // HKO warningInfo subtype codes -> {chip colour, icon key}
   var WARN = {
     WRAINA:{bg:'#f0a000',i:'rain'}, WRAINR:{bg:'#d63229',i:'rain'}, WRAINB:{bg:'#161616',i:'rain'},
-    WTS:{bg:'#e6a700',i:'bolt'},
-    WHOT:{bg:'#e0492b',i:'hot'}, WCOLD:{bg:'#2b7fe0',i:'cold'},
-    WMSGNL:{bg:'#1f8a5b',i:'wind'}, WFROST:{bg:'#5aa9df',i:'snow'},
-    WL:{bg:'#8a5a2b',i:'slip'},
-    WFIREY:{bg:'#e0a800',i:'fire'}, WFIRER:{bg:'#d63229',i:'fire'},
-    WFNTSA:{bg:'#2b6fe0',i:'wave'}, WTMW:{bg:'#1466c0',i:'wave'},
+    WTS:{bg:'#e6a700',i:'bolt'}, WHOT:{bg:'#e0492b',i:'hot'}, WCOLD:{bg:'#2b7fe0',i:'cold'},
+    WMSGNL:{bg:'#1f8a5b',i:'wind'}, WFROST:{bg:'#5aa9df',i:'snow'}, WL:{bg:'#8a5a2b',i:'slip'},
+    WFIREY:{bg:'#e0a800',i:'fire'}, WFIRER:{bg:'#d63229',i:'fire'}, WFNTSA:{bg:'#2b6fe0',i:'wave'}, WTMW:{bg:'#1466c0',i:'wave'},
     TC1:{bg:'#2e9e5b',i:'t_up'}, TC3:{bg:'#e0a800',i:'t_dn'},
-    TC8NE:{bg:'#d63229',i:'c_ne'}, TC8SE:{bg:'#d63229',i:'c_se'},
-    TC8SW:{bg:'#d63229',i:'c_sw'}, TC8NW:{bg:'#d63229',i:'c_nw'},
+    TC8NE:{bg:'#d63229',i:'c_ne'}, TC8SE:{bg:'#d63229',i:'c_se'}, TC8SW:{bg:'#d63229',i:'c_sw'}, TC8NW:{bg:'#d63229',i:'c_nw'},
     TC9:{bg:'#9a1616',i:'tc9'}, TC10:{bg:'#111111',i:'tc10'},
-    // fall-backs by statement code (no subtype)
     WRAIN:{bg:'#f0a000',i:'rain'}, TC:{bg:'#d63229',i:'t_up'}, WFIRE:{bg:'#e0a800',i:'fire'}
   };
-  function iconInner(i){
-    switch(i){
-      case 'rain': return '<path d="M7 14a4.2 4.2 0 01-.3-8.4A5 5 0 0116.7 5 3.6 3.6 0 0117 14H7z"/><g stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M8 16l-1 3M12 16l-1 3.4M16 16l-1 3"/></g>';
-      case 'bolt': return '<path d="M13 2L5 14h5l-2 8 9-13h-6z"/>';
-      case 'fire': return '<path d="M13 2c.5 3.5 4 4.5 4 9a5 5 0 01-10 0c0-2.2 1.2-3.4 2.2-4.4-.2 2 .8 3 1.8 2.6C10.2 6.5 10.5 4.3 13 2z"/>';
-      case 'snow': return '<g stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v18M4 8l16 8M20 8L4 16"/></g>';
-      case 'cold': return '<g stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v18M4 8l16 8M20 8L4 16"/></g>';
-      case 'hot':  return '<path d="M13 4a2 2 0 10-4 0v8.3a4 4 0 104 0z"/>';
-      case 'wind': return '<g fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M3 8h9a2.6 2.6 0 10-2.6-2.6"/><path d="M3 13h13a2.6 2.6 0 11-2.6 2.6"/><path d="M3 18h7"/></g>';
-      case 'wave': return '<g fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M2 9c2-2.2 4-2.2 6 0s4 2.2 6 0 4-2.2 6 0"/><path d="M2 14c2-2.2 4-2.2 6 0s4 2.2 6 0 4-2.2 6 0"/><path d="M2 19c2-2.2 4-2.2 6 0s4 2.2 6 0 4-2.2 6 0"/></g>';
-      case 'slip': return '<path d="M2 21L13 6l9 15z"/><circle cx="9" cy="14" r="1.5" fill="#000" opacity=".28"/><circle cx="14.5" cy="17.5" r="1.7" fill="#000" opacity=".28"/>';
-      case 't_up': return '<path d="M12 5l8 14H4z"/>';
-      case 't_dn': return '<path d="M12 19L4 5h16z"/>';
-      case 'c_nw': return '<path d="M4 4h16L4 20z"/>';
-      case 'c_ne': return '<path d="M20 4v16L4 4z"/>';
-      case 'c_sw': return '<path d="M4 4v16h16z"/>';
-      case 'c_se': return '<path d="M20 4v16H4z"/>';
-      case 'tc9':  return '<path d="M6 4h12l-6 7z"/><path d="M6 20h12l-6-7z"/>';
-      case 'tc10': return '<path d="M10 3h4v7h7v4h-7v7h-4v-7H3v-4h7z"/>';
-      default:     return '<path d="M12 3l10 18H2z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><rect x="11" y="9" width="2" height="5.4" rx="1"/><circle cx="12" cy="17.6" r="1.2"/>';
-    }
-  }
-  function renderWarnings(codes){
-    var box=document.getElementById('warnBox'); if(!box) return;
-    var seen={}, html='';
+  function iconInner(i){ switch(i){
+    case 'rain': return '<path d="M7 14a4.2 4.2 0 01-.3-8.4A5 5 0 0116.7 5 3.6 3.6 0 0117 14H7z"/><g stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M8 16l-1 3M12 16l-1 3.4M16 16l-1 3"/></g>';
+    case 'bolt': return '<path d="M13 2L5 14h5l-2 8 9-13h-6z"/>';
+    case 'fire': return '<path d="M13 2c.5 3.5 4 4.5 4 9a5 5 0 01-10 0c0-2.2 1.2-3.4 2.2-4.4-.2 2 .8 3 1.8 2.6C10.2 6.5 10.5 4.3 13 2z"/>';
+    case 'snow': case 'cold': return '<g stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v18M4 8l16 8M20 8L4 16"/></g>';
+    case 'hot':  return '<path d="M13 4a2 2 0 10-4 0v8.3a4 4 0 104 0z"/>';
+    case 'wind': return '<g fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M3 8h9a2.6 2.6 0 10-2.6-2.6"/><path d="M3 13h13a2.6 2.6 0 11-2.6 2.6"/><path d="M3 18h7"/></g>';
+    case 'wave': return '<g fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><path d="M2 9c2-2.2 4-2.2 6 0s4 2.2 6 0 4-2.2 6 0"/><path d="M2 14c2-2.2 4-2.2 6 0s4 2.2 6 0 4-2.2 6 0"/><path d="M2 19c2-2.2 4-2.2 6 0s4 2.2 6 0 4-2.2 6 0"/></g>';
+    case 'slip': return '<path d="M2 21L13 6l9 15z"/><circle cx="9" cy="14" r="1.5" fill="#000" opacity=".28"/><circle cx="14.5" cy="17.5" r="1.7" fill="#000" opacity=".28"/>';
+    case 't_up': return '<path d="M12 5l8 14H4z"/>';   case 't_dn': return '<path d="M12 19L4 5h16z"/>';
+    case 'c_nw': return '<path d="M4 4h16L4 20z"/>';   case 'c_ne': return '<path d="M20 4v16L4 4z"/>';
+    case 'c_sw': return '<path d="M4 4v16h16z"/>';     case 'c_se': return '<path d="M20 4v16H4z"/>';
+    case 'tc9':  return '<path d="M6 4h12l-6 7z"/><path d="M6 20h12l-6-7z"/>';
+    case 'tc10': return '<path d="M10 3h4v7h7v4h-7v7h-4v-7H3v-4h7z"/>';
+    default:     return '<path d="M12 3l10 18H2z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><rect x="11" y="9" width="2" height="5.4" rx="1"/><circle cx="12" cy="17.6" r="1.2"/>';
+  } }
+  function buildWarnHtml(codes){ var seen={}, h='';
     for(var i=0;i<codes.length;i++){ var code=(codes[i]||'').toUpperCase(); if(!code||seen[code]) continue; seen[code]=1;
-      var w=WARN[code]||WARN[code.replace(/[0-9].*$/,'')]||null;
-      var bg=w?w.bg:'#e0900d'; var ic=w?w.i:'warn';
-      html+='<span class="warn-chip" style="background:'+bg+'"><svg viewBox="0 0 24 24" fill="#fff">'+iconInner(ic)+'</svg></span>';
-    }
-    box.innerHTML=html;
-  }
-  function updWarnings(){
-    getJSON('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=en').then(function(d){
-      var details=(d&&d.details)||[]; var codes=[];
-      for(var i=0;i<details.length;i++){ codes.push(details[i].subtype||details[i].warningStatementCode); }
-      renderWarnings(codes);
-    }).catch(function(){});
-  }
+      var w=WARN[code]||WARN[code.replace(/[0-9].*$/,'')]||null; var bg=w?w.bg:'#e0900d'; var ic=w?w.i:'warn';
+      h+='<span class="warn-chip" style="background:'+bg+'"><svg viewBox="0 0 24 24" fill="#fff">'+iconInner(ic)+'</svg></span>'; }
+    return h; }
+  function updWarnings(){ getJSON('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warningInfo&lang=en').then(function(d){
+    var details=(d&&d.details)||[]; var codes=[]; for(var i=0;i<details.length;i++){ codes.push(details[i].subtype||details[i].warningStatementCode); }
+    html2('warnBox',buildWarnHtml(codes)); }).catch(function(){}); }
 
-  /* ---------------- theme ---------------- */
-  function applyTheme(t){ document.body.className=(t==='dark')?'dark':''; var b=document.getElementById('themeBtn'); if(b) b.textContent=(t==='dark')?'☀':'☾'; }
+  /* ---- theme ---- */
+  var ICON_MOON='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>';
+  var ICON_BULB='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"/><path d="M10 21.5h4"/><path d="M12 3a6 6 0 00-4 10.5c.6.5 1 1.3 1 2.1V16h6v-.4c0-.8.4-1.6 1-2.1A6 6 0 0012 3z"/></svg>';
+  function applyTheme(t){ document.body.className=(t==='dark')?'dark':''; var b=document.getElementById('themeBtn'); if(b) b.innerHTML=(t==='dark')?ICON_BULB:ICON_MOON; }
   var theme='light'; var savedT=lsGet('novoTheme');
   if(savedT) theme=savedT; else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) theme='dark';
   applyTheme(theme);
   document.getElementById('themeBtn').onclick=function(){ theme=(document.body.className==='dark')?'light':'dark'; applyTheme(theme); lsSet('novoTheme',theme); };
 
-  /* ---------------- boot ---------------- */
-  render(); updClock(); updWeather(); updWarnings(); refreshAll();
-  setInterval(updClock, 1000);
-  setInterval(render, 1000);
-  setInterval(refreshAll, 30000);
-  setInterval(updWeather, 600000);
-  setInterval(updWarnings, 300000);
+  /* ---- swipeable pager (cards only) ---- */
+  var pager=document.getElementById('pager'), track=document.getElementById('track');
+  var W=0, page=0, dragging=false, startX=0, startY=0, base=0, lock=null;
+  function setX(x,anim){ var tr=anim?'transform .32s cubic-bezier(.22,.61,.36,1)':'none';
+    track.style.webkitTransition=anim?'-webkit-transform .32s cubic-bezier(.22,.61,.36,1)':'none'; track.style.transition=tr;
+    track.style.webkitTransform='translateX('+x+'px)'; track.style.transform='translateX('+x+'px)'; }
+  function updTabs(){ document.getElementById('tab0').className='tab'+(page===0?' active':''); document.getElementById('tab1').className='tab'+(page===1?' active':''); }
+  function goto(p,anim){ page=p<0?0:(p>1?1:p); setX(-page*W, anim!==false); updTabs(); }
+  function measure(){ W=pager.clientWidth; setX(-page*W,false); }
+  function down(x,y){ dragging=true; lock=null; startX=x; startY=y; base=-page*W; }
+  function move(x,y){ if(!dragging) return false; var dx=x-startX, dy=y-startY;
+    if(lock===null){ if(Math.abs(dx)>8||Math.abs(dy)>8) lock=(Math.abs(dx)>Math.abs(dy))?'h':'v'; }
+    if(lock!=='h') return false; var nx=base+dx; if(nx>0) nx*=0.35; if(nx<-W) nx=-W+(nx+W)*0.35; setX(nx,false); return true; }
+  function up(x){ if(!dragging) return; dragging=false; if(lock!=='h'){ setX(-page*W,true); return; }
+    var dx=x-startX, th=W*0.16; if(dx<-th && page<1) goto(1,true); else if(dx>th && page>0) goto(0,true); else goto(page,true); }
+  pager.addEventListener('touchstart',function(e){ var t=e.touches[0]; down(t.clientX,t.clientY); }, {passive:true});
+  pager.addEventListener('touchmove', function(e){ var t=e.touches[0]; if(move(t.clientX,t.clientY)) e.preventDefault(); }, {passive:false});
+  pager.addEventListener('touchend',  function(e){ var t=(e.changedTouches&&e.changedTouches[0])||{clientX:startX}; up(t.clientX); });
+  pager.addEventListener('mousedown', function(e){ down(e.clientX,e.clientY); });
+  document.addEventListener('mousemove', function(e){ if(dragging) move(e.clientX,e.clientY); });
+  document.addEventListener('mouseup',   function(e){ if(dragging) up(e.clientX); });
+  document.getElementById('tab0').addEventListener('click',function(){ goto(0,true); });
+  document.getElementById('tab1').addEventListener('click',function(){ goto(1,true); });
+  window.addEventListener('resize', measure);
+
+  /* ---- boot ---- */
+  measure(); renderAll(); updClock(); updWeather(); updWarnings(); refreshAll();
+  setInterval(updClock, 1000); setInterval(renderAll, 1000); setInterval(refreshAll, 30000);
+  setInterval(updWeather, 600000); setInterval(updWarnings, 300000);
 })();
 </script>
 </body>
