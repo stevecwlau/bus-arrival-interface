@@ -7,97 +7,70 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Novo Land Bus">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Novo Land · 巴士到站</title>
+<title>Novo Land · 巴士到站 (Live)</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700;900&family=Barlow+Semi+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --panel-1:#eef4f8; --panel-2:#e1ebf2;
-    --row-a:#ffffff; --row-b:#f2f7fb;
+    --panel-1:#eef4f8; --panel-2:#e1ebf2; --row-a:#ffffff; --row-b:#f2f7fb;
     --ink:#141c28; --ink-soft:#3f4f63; --muted:#6c7c8e; --hair:#cdd7e1;
     --kmb:#d7202b; --ctb:#f4a300; --ctb-ink:#3a2c00; --mtrb:#0058a3;
-    --arrived:#d7202b; --header:#ffffff; --footer:#dbe6ee; --live:#1faf5a;
+    --arrived:#d7202b; --header:#ffffff; --footer:#dbe6ee; --live:#1faf5a; --warn:#e0900d;
     --btn:#e7eef4; --btn-ink:#3f4f63;
   }
   body.dark{
-    --panel-1:#0f151c; --panel-2:#0a0e13;
-    --row-a:#151d26; --row-b:#101822;
+    --panel-1:#0f151c; --panel-2:#0a0e13; --row-a:#151d26; --row-b:#101822;
     --ink:#f1f6fb; --ink-soft:#c4cfda; --muted:#8493a2; --hair:#243039;
     --kmb:#ff3b40; --ctb:#ffbb1c; --ctb-ink:#2a2000; --mtrb:#3f9bff;
-    --arrived:#ff4d52; --header:#0d131a; --footer:#0c1117; --live:#35d07f;
+    --arrived:#ff4d52; --header:#0d131a; --footer:#0c1117; --live:#35d07f; --warn:#ffbb1c;
     --btn:#1c2732; --btn-ink:#c4cfda;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
   html,body{height:100%;width:100%;overflow:hidden;background:var(--panel-2);}
-  body{
-    position:fixed;top:0;left:0;width:100%;height:100%;
+  body{position:fixed;top:0;left:0;width:100%;height:100%;
     font-family:"Noto Sans HK",-apple-system,BlinkMacSystemFont,"PingFang HK","Microsoft JhengHei",sans-serif;
     -webkit-font-smoothing:antialiased;color:var(--ink);
-    -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
-  }
-  .board{
-    height:100%;width:100%;display:-webkit-box;display:-webkit-flex;display:flex;
-    -webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column;
-    background:var(--panel-1);
-  }
+    -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
+  .board{height:100%;width:100%;display:-webkit-flex;display:flex;
+    -webkit-flex-direction:column;flex-direction:column;background:var(--panel-1);}
 
-  /* ---------- header with BIG clock ---------- */
-  .topbar{
-    -webkit-flex:0 0 auto;flex:0 0 auto;
-    display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;
-    -webkit-justify-content:space-between;justify-content:space-between;
-    padding:1.4vh 2.6vw;background:var(--header);border-bottom:1px solid var(--hair);
-  }
+  .topbar{-webkit-flex:0 0 auto;flex:0 0 auto;display:-webkit-flex;display:flex;
+    -webkit-align-items:center;align-items:center;-webkit-justify-content:space-between;justify-content:space-between;
+    padding:1.4vh 2.6vw;background:var(--header);border-bottom:1px solid var(--hair);}
   .hub{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;}
   .hub .dot{width:1.4vh;height:1.4vh;border-radius:50%;background:var(--live);
     box-shadow:0 0 0 .5vh rgba(31,175,90,.2);margin-right:1.4vh;-webkit-flex:0 0 auto;flex:0 0 auto;}
+  .hub .dot.warn{background:var(--warn);box-shadow:0 0 0 .5vh rgba(224,144,13,.2);}
   .hub .name{font-weight:900;font-size:3.4vh;letter-spacing:.6px;color:var(--ink);}
   .hub .sub{font-weight:500;font-size:1.9vh;color:var(--muted);margin-left:1.4vh;}
-
   .head-right{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;}
   .clock{text-align:right;margin-right:2vw;line-height:1;}
   .clock .hm{font-family:"Barlow Semi Condensed","Noto Sans HK",sans-serif;font-weight:800;
     font-size:7.4vh;color:var(--ink);letter-spacing:1px;}
   .clock .hm .sec{font-size:3.2vh;color:var(--muted);margin-left:.5vw;font-weight:700;}
-  .clock .date{font-size:1.9vh;color:var(--muted);font-weight:600;margin-top:.4vh;letter-spacing:.3px;}
-  .toggle{
-    -webkit-flex:0 0 auto;flex:0 0 auto;
-    width:6.4vh;height:6.4vh;border-radius:50%;border:none;cursor:pointer;
-    background:var(--btn);color:var(--btn-ink);font-size:3vh;line-height:6.4vh;text-align:center;
-  }
+  .clock .date{font-size:1.9vh;color:var(--muted);font-weight:600;margin-top:.4vh;}
+  .toggle{-webkit-flex:0 0 auto;flex:0 0 auto;width:6.4vh;height:6.4vh;border-radius:50%;border:none;
+    cursor:pointer;background:var(--btn);color:var(--btn-ink);font-size:3vh;line-height:6.4vh;text-align:center;}
 
-  /* ---------- column labels ---------- */
-  .cols{
-    -webkit-flex:0 0 auto;flex:0 0 auto;
-    display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;
-    padding:1vh 2.6vw;color:var(--muted);font-size:1.85vh;font-weight:700;letter-spacing:.5px;
-    border-bottom:1px solid var(--hair);background:var(--header);
-  }
+  .cols{-webkit-flex:0 0 auto;flex:0 0 auto;display:-webkit-flex;display:flex;
+    -webkit-align-items:center;align-items:center;padding:1vh 2.6vw;color:var(--muted);
+    font-size:1.85vh;font-weight:700;letter-spacing:.5px;border-bottom:1px solid var(--hair);background:var(--header);}
 
-  /* ---------- rows ---------- */
   .rows{-webkit-flex:1 1 auto;flex:1 1 auto;display:-webkit-flex;display:flex;
-    -webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column;overflow:hidden;}
-  .row{
-    -webkit-flex:1 1 0px;flex:1 1 0px;min-height:0;
-    display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;
-    padding:0 2.6vw;border-bottom:1px solid var(--hair);
-  }
-  .row:nth-child(odd){background:var(--row-a);}
-  .row:nth-child(even){background:var(--row-b);}
+    -webkit-flex-direction:column;flex-direction:column;overflow:hidden;}
+  .row{-webkit-flex:1 1 0px;flex:1 1 0px;min-height:0;display:-webkit-flex;display:flex;
+    -webkit-align-items:center;align-items:center;padding:0 2.6vw;border-bottom:1px solid var(--hair);}
+  .row:nth-child(odd){background:var(--row-a);} .row:nth-child(even){background:var(--row-b);}
   .row:last-child{border-bottom:none;}
 
-  /* cells (flex widths, no CSS grid) */
   .c-route{-webkit-flex:0 0 18%;flex:0 0 18%;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;}
   .c-dest{-webkit-flex:1 1 auto;flex:1 1 auto;min-width:0;padding-right:1.5vw;}
   .c-next{-webkit-flex:0 0 15%;flex:0 0 15%;}
   .c-eta{-webkit-flex:0 0 20%;flex:0 0 20%;text-align:right;}
 
-  .badge{
-    font-family:"Barlow Semi Condensed","Noto Sans HK",sans-serif;font-weight:800;color:#fff;
+  .badge{font-family:"Barlow Semi Condensed","Noto Sans HK",sans-serif;font-weight:800;color:#fff;
     font-size:3.7vh;line-height:1;padding:.85vh 1.2vw;border-radius:1.1vh;letter-spacing:.5px;
-    text-align:center;margin-right:1vw;-webkit-flex:0 0 auto;flex:0 0 auto;
-  }
-  .badge.kmb{background:var(--kmb);} .badge.ctb{background:var(--ctb);color:var(--ctb-ink);}
-  .badge.mtrb{background:var(--mtrb);}
+    text-align:center;margin-right:1vw;-webkit-flex:0 0 auto;flex:0 0 auto;}
+  .badge.kmb{background:var(--kmb);} .badge.ctb{background:var(--ctb);color:var(--ctb-ink);} .badge.mtrb{background:var(--mtrb);}
   .op{font-size:1.5vh;font-weight:700;line-height:1.2;}
   .op.kmb{color:var(--kmb);} .op.ctb{color:#c07f00;} .op.mtrb{color:var(--mtrb);}
   body.dark .op.ctb{color:var(--ctb);}
@@ -109,36 +82,29 @@
 
   .nx{font-size:2.5vh;color:var(--ink-soft);font-weight:700;line-height:1.25;
     font-family:"Barlow Semi Condensed","Noto Sans HK",sans-serif;}
-  .nx small{font-size:1.7vh;color:var(--muted);font-weight:600;margin-left:.5vw;
-    font-family:"Noto Sans HK",sans-serif;}
+  .nx small{font-size:1.7vh;color:var(--muted);font-weight:600;margin-left:.5vw;font-family:"Noto Sans HK",sans-serif;}
   .nx.empty{color:var(--hair);}
 
   .eta-num{font-family:"Barlow Semi Condensed","Noto Sans HK",sans-serif;font-weight:800;
     font-size:6.8vh;color:var(--ink);letter-spacing:.5px;}
   .eta-unit{font-size:2.1vh;color:var(--muted);font-weight:600;margin-left:.6vw;}
   .arrived{font-size:3.9vh;font-weight:800;color:var(--arrived);letter-spacing:1px;}
+  .eta-none{font-size:2.4vh;color:var(--muted);font-weight:600;}
   .soon .eta-num{color:var(--kmb);}
 
-  /* ---------- footer ---------- */
-  .footer{
-    -webkit-flex:0 0 auto;flex:0 0 auto;
-    display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;
-    -webkit-justify-content:space-between;justify-content:space-between;
-    padding:1.2vh 2.6vw;background:var(--footer);color:var(--ink-soft);
-    border-top:1px solid var(--hair);font-size:2vh;font-weight:600;
-  }
+  .footer{-webkit-flex:0 0 auto;flex:0 0 auto;display:-webkit-flex;display:flex;
+    -webkit-align-items:center;align-items:center;-webkit-justify-content:space-between;justify-content:space-between;
+    padding:1.2vh 2.6vw;background:var(--footer);color:var(--ink-soft);border-top:1px solid var(--hair);
+    font-size:2vh;font-weight:600;}
   .foot-l{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;}
-  .foot-l .wx{margin-right:1.8vw;}
-  .demo{background:#e7a100;color:#241a00;border-radius:1vh;padding:.3vh 1.2vw;font-weight:800;
-    font-size:1.7vh;letter-spacing:.5px;}
-  body.dark .demo{background:#3a2e00;color:#ffcf4d;}
+  .live-pill{background:#127a3e;color:#eafff2;border-radius:1vh;padding:.3vh 1.2vw;font-weight:800;
+    font-size:1.7vh;letter-spacing:.5px;margin-left:1.4vw;}
+  .live-pill.warn{background:#7a5500;color:#fff3d6;}
   .foot-r{color:var(--muted);}
 
-  /* rotate hint */
-  .rotate{display:none;position:fixed;top:0;left:0;width:100%;height:100%;
-    background:#0d0f12;color:#c3ccd8;-webkit-flex-direction:column;flex-direction:column;
-    -webkit-align-items:center;align-items:center;-webkit-justify-content:center;justify-content:center;
-    font-size:3.4vw;text-align:center;line-height:1.6;z-index:10;}
+  .rotate{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0d0f12;color:#c3ccd8;
+    -webkit-flex-direction:column;flex-direction:column;-webkit-align-items:center;align-items:center;
+    -webkit-justify-content:center;justify-content:center;font-size:3.4vw;text-align:center;line-height:1.6;z-index:10;}
   @media (orientation:portrait){ .rotate{display:-webkit-flex;display:flex;} .board{display:none;} }
 </style>
 </head>
@@ -146,7 +112,7 @@
   <div class="board">
     <div class="topbar">
       <div class="hub">
-        <span class="dot"></span>
+        <span class="dot" id="statusDot"></span>
         <span class="name">NOVO LAND</span>
         <span class="sub">菁田 · 屯門 Ching Tin, Tuen Mun</span>
       </div>
@@ -166,19 +132,12 @@
       <div class="c-eta">即將到達 Arriving</div>
     </div>
 
-    <div class="rows" id="rows">
-      <!-- static fallback (shown even if JS is blocked); JS replaces this -->
-      <div class="row"><div class="c-route"><span class="badge mtrb">K54</span><span class="op mtrb">MTR Bus<br>港鐵巴士</span></div><div class="c-dest"><div class="dest-main">屯門市中心 (循環線)</div><div class="dest-sub">Tuen Mun Town Centre (Circular)</div></div><div class="c-next"><span class="nx">11<small>Min.</small></span><br><span class="nx">19<small>Min.</small></span></div><div class="c-eta"><span class="eta-num soon">3</span><span class="eta-unit">Min.</span></div></div>
-      <div class="row"><div class="c-route"><span class="badge mtrb">K54A</span><span class="op mtrb">MTR Bus<br>港鐵巴士</span></div><div class="c-dest"><div class="dest-main">兆康站 (北)</div><div class="dest-sub">MTR Siu Hong Station (North)</div></div><div class="c-next"><span class="nx">12<small>Min.</small></span><br><span class="nx">22<small>Min.</small></span></div><div class="c-eta"><span class="arrived">已到站</span></div></div>
-      <div class="row"><div class="c-route"><span class="badge kmb">258D</span><span class="op kmb">KMB<br>九巴</span></div><div class="c-dest"><div class="dest-main">藍田站</div><div class="dest-sub">Lam Tin Station</div></div><div class="c-next"><span class="nx">18<small>Min.</small></span><br><span class="nx">34<small>Min.</small></span></div><div class="c-eta"><span class="eta-num">6</span><span class="eta-unit">Min.</span></div></div>
-      <div class="row"><div class="c-route"><span class="badge ctb">55</span><span class="op ctb">CTB<br>城巴</span></div><div class="c-dest"><div class="dest-main">觀塘碼頭</div><div class="dest-sub">Kwun Tong Ferry Pier</div></div><div class="c-next"><span class="nx">24<small>Min.</small></span><br><span class="nx">41<small>Min.</small></span></div><div class="c-eta"><span class="eta-num">9</span><span class="eta-unit">Min.</span></div></div>
-      <div class="row"><div class="c-route"><span class="badge ctb">50</span><span class="op ctb">CTB<br>城巴</span></div><div class="c-dest"><div class="dest-main">尖沙咀 (九龍站)</div><div class="dest-sub">Tsim Sha Tsui (Kowloon Station)</div></div><div class="c-next"><span class="nx">28<small>Min.</small></span></div><div class="c-eta"><span class="eta-num">14</span><span class="eta-unit">Min.</span></div></div>
-    </div>
+    <div class="rows" id="rows"></div>
 
     <div class="footer">
       <div class="foot-l">
-        <span class="wx">☀ <span id="temp">29°C</span> · 濕度 <span id="hum">78</span>%</span>
-        <span class="demo">示範數據 DEMO</span>
+        <span class="wx">☀ <span id="temp">--°C</span></span>
+        <span class="live-pill" id="livePill">實時 LIVE</span>
       </div>
       <div class="foot-r">更新 <span id="upd">--:--</span></div>
     </div>
@@ -188,96 +147,223 @@
 
 <script>
 (function(){
-  var routes = [
-    {no:"K54",  op:"mtrb", zh:"屯門市中心 (循環線)", en:"Tuen Mun Town Centre (Circular)", etas:[3*60, 11*60, 19*60]},
-    {no:"K54A", op:"mtrb", zh:"兆康站 (北)",         en:"MTR Siu Hong Station (North)",    etas:[20, 12*60, 22*60]},
-    {no:"258D", op:"kmb",  zh:"藍田站",              en:"Lam Tin Station",                 etas:[6*60, 18*60, 34*60]},
-    {no:"55",   op:"ctb",  zh:"觀塘碼頭",            en:"Kwun Tong Ferry Pier",            etas:[9*60, 24*60, 41*60]},
-    {no:"50",   op:"ctb",  zh:"尖沙咀 (九龍站)",     en:"Tsim Sha Tsui (Kowloon Station)", etas:[14*60, 28*60]}
+  /* ---------------- config: the 5 services at NOVO LAND ---------------- */
+  // The gov.hk APIs (KMB / Citybus / MTR Bus / weather) block direct browser
+  // calls (CORS), so route everything through your own free Cloudflare Worker.
+  // Paste its URL here, then re-deploy this page. Example:
+  //   var PROXY = 'https://novo-bus.YOURNAME.workers.dev/';
+  var PROXY = '';
+  function px(u){ return PROXY ? PROXY + '?url=' + encodeURIComponent(u) : u; }
+
+  var SVCS = [
+    {key:'K54',  op:'mtrb', kind:'mtr', routeName:'K54',  stopId:'K54-U020',  fallbackIndex:1,
+      zh:'屯門市中心 (循環線)', en:'Tuen Mun Town Centre (Circular)'},
+    {key:'K54A', op:'mtrb', kind:'mtr', routeName:'K54A', stopId:'K54A-U020', fallbackIndex:1,
+      zh:'兆康站 (北)', en:'MTR Siu Hong Station (North)'},
+    {key:'258D', op:'kmb',  kind:'kmb', route:'258D', bound:'outbound', dir:'O', service:'1',
+      match:['寶田','PO TIN'], zh:'藍田站', en:'Lam Tin Station'},
+    {key:'55',   op:'ctb',  kind:'ctb', route:'55',  bound:'outbound', dir:'O',
+      match:['NOVO LAND'], zh:'觀塘碼頭', en:'Kwun Tong Ferry Pier'},
+    {key:'50',   op:'ctb',  kind:'ctb', route:'50',  bound:'outbound', dir:'O',
+      match:['NOVO LAND'], zh:'尖沙咀 (九龍站)', en:'Tsim Sha Tsui (Kowloon Station)'}
   ];
   var opName = {kmb:{en:"KMB",zh:"九巴"}, ctb:{en:"CTB",zh:"城巴"}, mtrb:{en:"MTR Bus",zh:"港鐵巴士"}};
   var days = ['日','一','二','三','四','五','六'];
-  var rowsEl = document.getElementById('rows');
+  var state = {};       // key -> {targets:[ms], err:bool, loading:bool}
+  var lastUpdate = 0;
+
+  /* ---------------- helpers ---------------- */
   function pad(n){ return ('0'+n).slice(-2); }
-  function fmtMin(s){ return Math.max(1, Math.round(s/60)); }
-  function hkDate(){
-    var now = new Date();
-    return new Date(now.getTime() + now.getTimezoneOffset()*60000 + 8*3600000);
+  function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  function hkDate(){ var n=new Date(); return new Date(n.getTime()+n.getTimezoneOffset()*60000+8*3600000); }
+  function makeMatcher(patterns){
+    var ps=(patterns||['NOVO LAND']).map(function(p){return p.toUpperCase();});
+    return function(en,tc){
+      en=(en||'').toUpperCase(); tc=(tc||'').toUpperCase();
+      for(var i=0;i<ps.length;i++){ if(en.indexOf(ps[i])>=0 || tc.indexOf(ps[i])>=0) return true; }
+      return false;
+    };
+  }
+  function getJSON(url,opts){
+    return fetch(px(url), opts||{}).then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
   }
 
+  /* ---------------- stop-id resolution (KMB / CTB) with cache ---------------- */
+  function resolveKmb(svc){
+    var sig=(svc.match||[]).join('|');
+    var ck='novo_kmb_'+svc.route+'_'+svc.bound+'_'+sig; var c=lsGet(ck); if(c) return Promise.resolve(c);
+    var matcher=makeMatcher(svc.match);
+    return getJSON('https://data.etabus.gov.hk/v1/transport/kmb/route-stop/'+svc.route+'/'+svc.bound+'/'+svc.service)
+      .then(function(rs){
+        var stops=(rs&&rs.data)||[]; var idx=0;
+        function step(){
+          if(idx>=stops.length || idx>60) return null;
+          var sid=stops[idx].stop; idx++;
+          return getJSON('https://data.etabus.gov.hk/v1/transport/kmb/stop/'+sid).then(function(s){
+            var d=s&&s.data||{};
+            if(matcher(d.name_en,d.name_tc)){ lsSet(ck,sid); return sid; }
+            return step();
+          });
+        }
+        return step();
+      });
+  }
+  function resolveCtb(svc){
+    var sig=(svc.match||[]).join('|');
+    var ck='novo_ctb_'+svc.route+'_'+svc.bound+'_'+sig; var c=lsGet(ck); if(c) return Promise.resolve(c);
+    var matcher=makeMatcher(svc.match);
+    return getJSON('https://rt.data.gov.hk/v2/transport/citybus/route-stop/CTB/'+svc.route+'/'+svc.bound)
+      .then(function(rs){
+        var stops=(rs&&rs.data)||[]; var idx=0;
+        function step(){
+          if(idx>=stops.length || idx>60) return null;
+          var sid=stops[idx].stop; idx++;
+          return getJSON('https://rt.data.gov.hk/v2/transport/citybus/stop/'+sid).then(function(s){
+            var d=s&&s.data||{};
+            if(matcher(d.name_en,d.name_tc)){ lsSet(ck,sid); return sid; }
+            return step();
+          });
+        }
+        return step();
+      });
+  }
+
+  /* ---------------- ETA fetchers -> array of absolute target times (ms) ---------------- */
+  function fetchKmb(svc){
+    return resolveKmb(svc).then(function(sid){
+      if(!sid) return [];
+      return getJSON('https://data.etabus.gov.hk/v1/transport/kmb/eta/'+sid+'/'+svc.route+'/'+svc.service)
+        .then(function(r){
+          return ((r&&r.data)||[])
+            .filter(function(e){ return e.dir===svc.dir && e.eta; })
+            .map(function(e){ return new Date(e.eta).getTime(); })
+            .filter(function(t){ return !isNaN(t); });
+        });
+    });
+  }
+  function fetchCtb(svc){
+    return resolveCtb(svc).then(function(sid){
+      if(!sid) return [];
+      return getJSON('https://rt.data.gov.hk/v2/transport/citybus/eta/CTB/'+sid+'/'+svc.route)
+        .then(function(r){
+          return ((r&&r.data)||[])
+            .filter(function(e){ return e.dir===svc.dir && e.eta; })
+            .map(function(e){ return new Date(e.eta).getTime(); })
+            .filter(function(t){ return !isNaN(t); });
+        });
+    });
+  }
+  function fetchMtr(svc){
+    var url='https://rt.data.gov.hk/v1/transport/mtr/bus/getSchedule';
+    return getJSON(url,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({language:'en',routeName:svc.routeName})})
+      .then(function(r){
+        var stops=(r&&r.busStop)||[]; var target=null;
+        for(var i=0;i<stops.length;i++){ if(stops[i].busStopId===svc.stopId){ target=stops[i]; break; } }
+        if(!target && stops.length>svc.fallbackIndex) target=stops[svc.fallbackIndex];
+        if(!target) return [];
+        var now=Date.now();
+        return ((target.bus)||[]).map(function(b){
+          var raw = (b.arrivalTimeInSecond!=null && b.arrivalTimeInSecond!=='') ? b.arrivalTimeInSecond : b.departureTimeInSecond;
+          var sec=parseInt(raw,10); if(isNaN(sec)) return NaN;
+          return now + sec*1000;
+        }).filter(function(t){ return !isNaN(t); });
+      });
+  }
+
+  function refreshOne(svc){
+    var p = svc.kind==='kmb' ? fetchKmb(svc) : svc.kind==='ctb' ? fetchCtb(svc) : fetchMtr(svc);
+    return p.then(function(targets){
+      targets = (targets||[]).filter(function(t){ return t > Date.now()-90000; }).sort(function(a,b){return a-b;});
+      state[svc.key]={targets:targets,err:false,loading:false};
+    }).catch(function(e){
+      var prev=state[svc.key];
+      state[svc.key]={targets:prev?prev.targets:[],err:true,loading:false};
+    });
+  }
+  function refreshAll(){
+    var ps=[]; for(var i=0;i<SVCS.length;i++) ps.push(refreshOne(SVCS[i]));
+    return Promise.all(ps).then(function(){ lastUpdate=Date.now(); render(); updStatus(); });
+  }
+
+  /* ---------------- render ---------------- */
   function render(){
-    var html = '';
-    for(var i=0;i<routes.length;i++){
-      var rt = routes[i];
-      var etas = rt.etas.slice().sort(function(a,b){return a-b;});
-      var soonest = etas[0];
-      var nexts = etas.slice(1,3);
-      var etaHtml;
-      if(soonest <= 30){ etaHtml = '<span class="arrived">已到站</span>'; }
-      else{
-        var m = fmtMin(soonest);
-        etaHtml = '<span class="eta-num'+(m<=3?' soon':'')+'">'+m+'</span><span class="eta-unit">Min.</span>';
+    var now=Date.now(); var html='';
+    for(var i=0;i<SVCS.length;i++){
+      var svc=SVCS[i]; var st=state[svc.key]||{loading:true};
+      var etaHtml, nextHtml;
+      if(st.loading){
+        etaHtml='<span class="eta-none">載入中…</span>'; nextHtml='<span class="nx empty">—</span>';
+      } else {
+        var secs=st.targets.map(function(t){return (t-now)/1000;})
+                 .filter(function(s){return s>-45;}).sort(function(a,b){return a-b;});
+        if(secs.length===0){
+          etaHtml='<span class="eta-none">'+(st.err?'讀取失敗':'—')+'</span>';
+          nextHtml='<span class="nx empty">—</span>';
+        } else {
+          var s0=secs[0];
+          if(s0<=30){ etaHtml='<span class="arrived">已到站</span>'; }
+          else { var m=Math.max(1,Math.round(s0/60)); etaHtml='<span class="eta-num'+(m<=3?' soon':'')+'">'+m+'</span><span class="eta-unit">Min.</span>'; }
+          var nx=secs.slice(1,3); nextHtml='';
+          for(var j=0;j<nx.length;j++){ nextHtml+=(j>0?'<br>':'')+'<span class="nx">'+Math.max(1,Math.round(nx[j]/60))+'<small>Min.</small></span>'; }
+          if(nx.length===0) nextHtml='<span class="nx empty">—</span>';
+        }
       }
-      var nextHtml = '';
-      for(var j=0;j<nexts.length;j++){ nextHtml += (j>0?'<br>':'')+'<span class="nx">'+fmtMin(nexts[j])+'<small>Min.</small></span>'; }
-      if(nexts.length===0){ nextHtml = '<span class="nx empty">—</span>'; }
-      html +=
-        '<div class="row"><div class="c-route"><span class="badge '+rt.op+'">'+rt.no+'</span>'+
-        '<span class="op '+rt.op+'">'+opName[rt.op].en+'<br>'+opName[rt.op].zh+'</span></div>'+
-        '<div class="c-dest"><div class="dest-main">'+rt.zh+'</div><div class="dest-sub">'+rt.en+'</div></div>'+
-        '<div class="c-next">'+nextHtml+'</div>'+
-        '<div class="c-eta">'+etaHtml+'</div></div>';
+      html+='<div class="row"><div class="c-route"><span class="badge '+svc.op+'">'+svc.key+'</span>'+
+        '<span class="op '+svc.op+'">'+opName[svc.op].en+'<br>'+opName[svc.op].zh+'</span></div>'+
+        '<div class="c-dest"><div class="dest-main">'+svc.zh+'</div><div class="dest-sub">'+svc.en+'</div></div>'+
+        '<div class="c-next">'+nextHtml+'</div><div class="c-eta">'+etaHtml+'</div></div>';
     }
-    rowsEl.innerHTML = html;
+    document.getElementById('rows').innerHTML=html;
   }
 
-  function tick(){
-    for(var i=0;i<routes.length;i++){
-      var rt = routes[i];
-      rt.etas = rt.etas.map(function(s){return s-1;}).sort(function(a,b){return a-b;});
-      if(rt.etas[0] < -18){
-        rt.etas.shift();
-        var last = rt.etas.length ? rt.etas[rt.etas.length-1] : 60;
-        rt.etas.push(last + (6 + Math.floor(Math.random()*10))*60);
-      }
-    }
-    render();
+  function updStatus(){
+    var anyErr=false,anyOk=false;
+    for(var i=0;i<SVCS.length;i++){ var st=state[SVCS[i].key]; if(st){ if(st.err)anyErr=true; else anyOk=true; } }
+    var stale = (Date.now()-lastUpdate) > 150000;
+    var bad = stale || (!anyOk);
+    document.getElementById('statusDot').className = 'dot'+(bad||anyErr?' warn':'');
+    var pill=document.getElementById('livePill');
+    if(!anyOk){ pill.textContent='離線 OFFLINE'; pill.className='live-pill warn'; }
+    else if(anyErr){ pill.textContent='部分實時'; pill.className='live-pill warn'; }
+    else { pill.textContent='實時 LIVE'; pill.className='live-pill'; }
+    if(lastUpdate) document.getElementById('upd').textContent=pad(hkDate().getHours())+':'+pad(hkDate().getMinutes());
   }
+
   function updClock(){
-    var d = hkDate();
-    document.getElementById('ck-hm').textContent = pad(d.getHours())+':'+pad(d.getMinutes());
-    document.getElementById('ck-s').textContent = pad(d.getSeconds());
-    document.getElementById('ck-date').textContent = '香港時間 '+(d.getMonth()+1)+'月'+d.getDate()+'日 星期'+days[d.getDay()];
-  }
-  function updRefresh(){ var d=hkDate(); document.getElementById('upd').textContent = pad(d.getHours())+':'+pad(d.getMinutes()); }
-  function drift(){
-    document.getElementById('temp').textContent = (28+Math.round(Math.random()*2))+'°C';
-    document.getElementById('hum').textContent = 76+Math.round(Math.random()*7);
+    var d=hkDate();
+    document.getElementById('ck-hm').textContent=pad(d.getHours())+':'+pad(d.getMinutes());
+    document.getElementById('ck-s').textContent=pad(d.getSeconds());
+    document.getElementById('ck-date').textContent='香港時間 '+(d.getMonth()+1)+'月'+d.getDate()+'日 星期'+days[d.getDay()];
   }
 
-  // theme
-  function applyTheme(t){
-    if(t==='dark'){ document.body.className='dark'; } else { document.body.className=''; }
-    var b=document.getElementById('themeBtn'); if(b){ b.textContent = (t==='dark') ? '☀' : '☾'; }
-  }
+  /* ---------------- theme ---------------- */
+  function applyTheme(t){ document.body.className = (t==='dark')?'dark':''; var b=document.getElementById('themeBtn'); if(b) b.textContent=(t==='dark')?'☀':'☾'; }
   var theme='light';
-  try{
-    var saved=localStorage.getItem('novoTheme');
-    if(saved){ theme=saved; }
-    else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){ theme='dark'; }
-  }catch(e){}
+  var savedT=lsGet('novoTheme');
+  if(savedT) theme=savedT;
+  else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) theme='dark';
   applyTheme(theme);
-  document.getElementById('themeBtn').onclick=function(){
-    theme = (document.body.className==='dark') ? 'light' : 'dark';
-    applyTheme(theme);
-    try{ localStorage.setItem('novoTheme', theme); }catch(e){}
-  };
+  document.getElementById('themeBtn').onclick=function(){ theme=(document.body.className==='dark')?'light':'dark'; applyTheme(theme); lsSet('novoTheme',theme); };
 
-  render(); updClock(); updRefresh();
-  setInterval(tick, 1000);
-  setInterval(updClock, 1000);
-  setInterval(updRefresh, 30000);
-  setInterval(drift, 45000);
+  /* ---------------- optional: HKO temperature (Tuen Mun) ---------------- */
+  function updWeather(){
+    getJSON('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=en')
+      .then(function(d){
+        var arr=(d&&d.temperature&&d.temperature.data)||[]; var t=null;
+        for(var i=0;i<arr.length;i++){ if(arr[i].place==='Tuen Mun'){ t=arr[i].value; break; } }
+        if(t===null && arr.length){ t=arr[0].value; }
+        if(t!==null) document.getElementById('temp').textContent=Math.round(t)+'°C';
+      }).catch(function(){});
+  }
+
+  /* ---------------- boot ---------------- */
+  render(); updClock(); updWeather(); refreshAll();
+  setInterval(updClock, 1000);   // live clock + smooth countdown
+  setInterval(render, 1000);
+  setInterval(refreshAll, 30000);   // re-fetch ETAs every 30s
+  setInterval(updWeather, 600000);  // weather every 10 min
 })();
 </script>
 </body>
